@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const financeSchema = new mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
     required: true,
   },
   description: {

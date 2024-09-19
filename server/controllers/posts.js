@@ -1,5 +1,6 @@
 import express from 'express';
 import Company from '../models/company.js';
+import Finance from '../models/finance.js'
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ export const setCompany = async (req, res) => {
 };
 
 export const getFinancialdata=async(req,res)=>{
-    const { date, description, amount, type } = req.body;
+    const { date} = req.body;
     try {
         const entries = await Finance.findOne({ date })
         res.status(200).json(entries);
