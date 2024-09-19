@@ -20,4 +20,14 @@ export const setCompany = async (req, res) => {
     }
 };
 
+export const getFinancialdata=async(req,res)=>{
+    const { date, description, amount, type } = req.body;
+    try {
+        const entries = await Finance.findOne({ date })
+        res.status(200).json(entries);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+}
+
 export default router;
