@@ -1,6 +1,7 @@
 import express from 'express';
 import Company from '../models/company.js';
-import Finance from '../models/finance.js'
+import Finance from '../models/finance.js';
+import Sale from '../models/sales.js';
 
 const router = express.Router();
 
@@ -25,6 +26,16 @@ export const getFinancialdata=async(req,res)=>{
     const { date} = req.body;
     try {
         const entries = await Finance.findOne({ date })
+        res.status(200).json(entries);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+}
+
+export const getCalenderdata=async(req,res)=>{
+    const { date} = req.body;
+    try {
+        const entries = await Sale.findOne({ date })
         res.status(200).json(entries);
       } catch (error) {
         res.status(500).json({ error: error.message });
