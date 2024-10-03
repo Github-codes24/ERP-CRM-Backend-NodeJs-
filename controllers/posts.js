@@ -37,5 +37,66 @@ const getCalenderdata=async(req,res)=>{
         res.status(500).json({ error: error.message });
       }
 }
+const addSalesReport=async(req,res)=>{
+  const{organizationName}=req.body;
+  try {
+    let salesReport = await Sale.findOne({ organizationName }); 
+    if (!salesReport) {
+      salesReport = new Sale(req.body);
+      await salesReport.save();
+    
+    res.status(200).json(salesReport);
+    }
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' }); 
+}
+}
 
-module.exports= {setCompany,getFinancialdata,getCalenderdata};
+const getTotalbill=async(req,res)=>{
+    try {
+      const salesdata = await Sale.find();
+      const totalBill = salesdata.reduce((acc, sale) => {
+        return acc + parseFloat(sale.billAmount) || 0;
+    }, 0);
+
+    res.status(200).json({ message: `Total bill is: ${totalBill}` });
+
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' }); 
+}
+
+}
+const getClearedbill=async(req,res)=>{
+  try {
+    const salesdata = await Sale.find();
+    const clearedBill = salesdata.reduce((acc, sale) => {
+      return acc + parseFloat(sale.paidAmount) || 0;
+  }, 0);
+
+  res.status(200).json({ message: `Total cleared bill is: ${clearedBill}` });
+
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: 'Internal server error' }); 
+}
+
+}
+const getPendingbill=async(req,res)=>{
+  try {
+    const salesdata = await Sale.find();
+    const pendingBill = salesdata.reduce((acc, sale) => {
+      return acc + parseFloat(sale.unclearedAmount) || 0;
+  }, 0);
+
+  res.status(200).json({ message: `Total Pending bill is: ${pendingBill}` });
+
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: 'Internal server error' }); 
+}
+
+}
+
+module.exports= {setCompany,getFinancialdata,getCalenderdata,addSalesReport, getTotalbill, getClearedbill,getPendingbill};
