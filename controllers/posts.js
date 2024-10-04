@@ -111,4 +111,6 @@ const getPendingbill=async(req,res)=>{
 
 }
 
+
+
 module.exports= {setCompany,getFinancialdata,getCalenderdata,addSalesReport, getSalesReport, getTotalbill, getClearedbill,getPendingbill};
