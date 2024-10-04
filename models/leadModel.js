@@ -34,7 +34,7 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   nextCallObjective: {
-    type: String,
+    type: [String],
     required: true,
   },
   targetDepartment: {
@@ -42,7 +42,7 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   discussionPoint: {
-    type: String,
+    type: [String],
     required: true,
   },
   lastMeeting: {
@@ -50,7 +50,7 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   nextFollowUp: {
-    type: String,
+    type: [String],
     required: true,
   },
   requiredSupport: {
@@ -58,7 +58,7 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   comments: {
-    type: String,
+    type: [String],
     required: true,
   },
   salesExpected: {
@@ -67,7 +67,7 @@ const leadSchema = new mongoose.Schema({
   },
 
   status: {
-    type: String,
+    type: [String],
     required: true,
   },
   leadOwner: {
