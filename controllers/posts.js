@@ -53,6 +53,18 @@ const addSalesReport=async(req,res)=>{
 }
 }
 
+
+const getSalesReport = async (req,res)=>{
+  try {
+    const salesReport = await Sale.find(); 
+    
+    return res.status(200).json(salesReport);
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' }); 
+}
+}
+
 const getTotalbill=async(req,res)=>{
     try {
       const salesdata = await Sale.find();
@@ -99,4 +111,4 @@ const getPendingbill=async(req,res)=>{
 
 }
 
-module.exports= {setCompany,getFinancialdata,getCalenderdata,addSalesReport, getTotalbill, getClearedbill,getPendingbill};
+module.exports= {setCompany,getFinancialdata,getCalenderdata,addSalesReport, getSalesReport, getTotalbill, getClearedbill,getPendingbill};
