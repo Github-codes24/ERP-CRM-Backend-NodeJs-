@@ -4,6 +4,6 @@ const leadController = require('../controllers/leadController');
 
 router.post('/addLead',leadController.addLead);
 router.get('/getLeads',leadController.getLeads);
-router.get('/trackLead/:id',leadController.trackLead);
+router.get('/getLeadById/:id',leadController.getLeadById);
 
 module.exports=router;
