@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 //adding  routes
+const superAdminRoutes = require("./routes/superAdminRoutes.js")
 const customerRouter = require("./routes/customerRoutes.js");
 const productRouter = require("./routes/productRoutes.js");
 const leadRouter = require("./routes/leadRoutes.js");
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/post", postRouter);
+app.use("/api/superAdmin", superAdminRoutes);
 
 app.use("/api/customer", customerRouter);
 app.use("/api/product", productRouter);
@@ -29,7 +31,9 @@ app.use((err, req, res) => {
 });
 
 mongoose
-  .connect(process.env.MONGO)
+  .connect(process.env.MONGO,
+    { useUnifiedTopology: true }
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
