@@ -4,7 +4,7 @@ const salesSchema = new mongoose.Schema({
   employeeFirstName: { type: String, required: true },
   employeeLastName: { type: String, required: true },
   productName: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: { type: String, required: true },
   organizationName: { type: String, required: true },
   email: { type: String, required: true },
   contact: { type: String, required: true },
