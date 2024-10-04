@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/finance", postRouter);
+app.use("/api/post", postRouter);
 
 app.use("/api/customer", customerRouter);
 app.use("/api/product", productRouter);
