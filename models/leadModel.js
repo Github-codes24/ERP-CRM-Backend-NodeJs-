@@ -26,7 +26,7 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   pincode: {
-    type: Number,
+    type: String,
     required: true,
   },
   callObjective: {
@@ -46,11 +46,11 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   lastMeeting: {
-    type: Date,
+    type: String,
     required: true,
   },
   nextFollowUp: {
-    type: Date,
+    type: String,
     required: true,
   },
   requiredSupport: {
@@ -62,7 +62,7 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   salesExpected: {
-    type: Date,
+    type: String,
     required: true,
   },
 
@@ -75,7 +75,7 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: [String],
+    type: String,
     required: true,
   },
 });
