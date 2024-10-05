@@ -15,7 +15,9 @@ const postRouter = require("./routes/posts.js");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "*", // Allow all origins (for development purposes; adjust for production)
+}));
 
 app.use("/api/post", postRouter);
 app.use("/api/superAdmin", superAdminRoutes);
