@@ -14,8 +14,8 @@ const addLead = async (req, res) => {
   };
   
   const getLeadById = async (req, res) => {
-    const id = req.params.id;
-    const result = await Lead.findById({ id })
+    const {id} = req.params;
+    const result = await Lead.findOne({ _id: id })
     res.status(200).json(result);
   };
 
