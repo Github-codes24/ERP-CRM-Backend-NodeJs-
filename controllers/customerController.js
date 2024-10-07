@@ -36,7 +36,22 @@ const addCustomer= async (req, res) => {
   }
 };
 
+const getCustomerDetails = async (req, res) => {
+  try {
+    // Fetch all customer data
+    const getData = await Customer.find();
+    
+    // Count total customers in the database
+    const totalCustomers = await Customer.countDocuments();
+
+    // Send response with data and total customer count
+    res.status(200).json({ totalCustomers, customers: getData });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 
 module.exports={
-    getTopCustomer, addCustomer
+    getTopCustomer, addCustomer, getCustomerDetails
 }
