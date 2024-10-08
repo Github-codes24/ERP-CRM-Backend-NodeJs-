@@ -14,11 +14,24 @@ const postRouter = require("./routes/posts.js");
 
 const app = express();
 
+const corsOptions = {
+  origin: (origin, callback) => {
+    const allowedOrigins = ['http://localhost:3000', 'https://yourdomain.com'];
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+
 app.use(express.json());
-app.use(cors({
-  origin: "*",
-  optionsSuccessStatus: 200, // Allow all origins (for development purposes; adjust for production)
-}));
+app.use(cors(corsOptions));
 
 app.use("/api/post", postRouter);
 app.use("/api/superAdmin", superAdminRoutes);
