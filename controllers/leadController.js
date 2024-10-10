@@ -2,10 +2,15 @@ const Lead = require("../models/leadModel");
 
 
 const addLead = async (req, res) => {
+  try  {
     const leadData = req.body;
     const lead = new Lead(leadData);
     const datasave = await lead.save();
-    res.status(200).json(datasave);
+    return res.status(200).json(datasave);
+  } catch (err) {
+    return res.status(500).json({ status: false, message: err.message})
+  }
+    
   };
   
   const getLeads = async (req, res) => {
