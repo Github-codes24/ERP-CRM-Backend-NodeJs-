@@ -24,7 +24,8 @@ const corsOptions = {
 
 
 app.use(express.json());
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.options("*", cors(corsOptions))
 
 app.use("/api/post", postRouter);
 app.use("/api/superAdmin", superAdminRoutes);
