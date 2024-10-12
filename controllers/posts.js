@@ -177,11 +177,11 @@ const getTotalbill=async(req,res)=>{
         return acc + parseFloat(sale.billAmount) || 0;
     }, 0);
 
-    res.status(200).json({ message: `Total bill is: ${totalBill}` });
+    return res.status(200).json({ data: totalBill });
 
 } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' }); 
+    res.status(500).json({ message: 'Internal server error' });
 }
 
 }
@@ -192,7 +192,7 @@ const getClearedbill=async(req,res)=>{
       return acc + parseFloat(sale.paidAmount) || 0;
   }, 0);
 
-  res.status(200).json({ message: `Total cleared bill is: ${clearedBill}` });
+  return res.status(200).json({ data: clearedBill });
 
 } catch (error) {
   console.error(error);
@@ -207,7 +207,7 @@ const getPendingbill=async(req,res)=>{
       return acc + parseFloat(sale.unclearedAmount) || 0;
   }, 0);
 
-  res.status(200).json({ message: `Total Pending bill is: ${pendingBill}` });
+  return res.status(200).json({ data: pendingBill });
 
 } catch (error) {
   console.error(error);
