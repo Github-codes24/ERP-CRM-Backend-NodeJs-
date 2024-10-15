@@ -43,7 +43,38 @@ const earningPerProduct = async (req, res) => {
   res.status(200).json(earningPerProduct);
 };
 
+const earningByItem = async (req, res) => {
+  try {
+    // Use Mongoose aggregation to group by productName and sum the paidAmount
+    const totalPaidAmount = await Sales.aggregate([
+      {
+        // Group by productName
+        $group: {
+          _id: "$productName",  // Group by productName field
+          totalPaidAmount: {
+            $sum: { $toInt: "$paidAmount" }  // Convert paidAmount from string to integer and sum it
+          }
+        }
+      }
+    ]);
+
+    // Format the response
+    const formattedResult = totalPaidAmount.map(item => ({
+      productName: item._id,
+      totalPaidAmount: item.totalPaidAmount
+    }));
+
+    // Send the result back
+    return res.status(200).json(formattedResult);
+  } catch (error) {
+    console.error('Error calculating total paid amount:', error);
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+
 module.exports = {
   getTopProducts,
   earningPerProduct,
+  earningByItem
 };
