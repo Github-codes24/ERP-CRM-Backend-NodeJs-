@@ -11,6 +11,7 @@ const customerRouter = require("./routes/customerRoutes.js");
 const productRouter = require("./routes/productRoutes.js");
 const leadRouter = require("./routes/leadRoutes.js");
 const postRouter = require("./routes/posts.js");
+const companyRouter = require("./routes/companyRoutes.js")
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/superAdmin", superAdminRoutes);
 app.use("/api/customer", customerRouter);
 app.use("/api/product", productRouter);
 app.use("/api/lead", leadRouter);
+app.use("/api/company", companyRouter);
 
 //adding default error handling
 
