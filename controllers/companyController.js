@@ -86,6 +86,12 @@ async function selectCompany(req, res){
         else if (company.name === "Envirosolution") {
             mongoURI = process.env.MONGO_URL3;
         }
+        else if (company.name === "Ignitesphere") {
+            mongoURI = process.env.MONGO_URL4;
+        }
+        else if (company.name === "Unisol") {
+            mongoURI = process.env.MONGO;
+        }
         // else {
         // return res.status(400).json({ message: 'Invalid condition for database switching' });
         // }
