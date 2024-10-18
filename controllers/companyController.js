@@ -83,9 +83,10 @@ async function selectCompany(req, res){
         if (company.name === "Surgisol") {
             mongoURI = process.env.MONGO_URL2;
         }
-        // else if (id === 'someConditionForCluster2') {
-        // mongoURI = process.env.MONGO_CLUSTER_2;
-        // } else {
+        else if (company.name === "Envirosolution") {
+            mongoURI = process.env.MONGO_URL3;
+        }
+        // else {
         // return res.status(400).json({ message: 'Invalid condition for database switching' });
         // }
 console.log("87", mongoURI)
