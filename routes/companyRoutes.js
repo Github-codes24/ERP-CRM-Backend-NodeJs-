@@ -5,7 +5,7 @@ const companyController = require("../controllers/companyController");
 companyController.seedCompanies();
 
 router.get('/getAllCompanies',companyController.getAllCompanies);
-router.get('/selectCompany/:id',companyController.selectCompany);
+router.post('/selectCompany',companyController.selectCompany);
 // router.get('/getCustomerDetails',customerController.getCustomerDetails);
 // router.get('/getCustomerById/:id',customerController.getCustomerById);
 

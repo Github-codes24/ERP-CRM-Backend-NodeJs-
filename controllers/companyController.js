@@ -1,3 +1,4 @@
+const { connectToMongoDB} = require("../config/db")
 const CompanyModel = require("../models/company");
 
 const companiesData = [
@@ -64,18 +65,36 @@ async function getAllCompanies(req, res){
       } catch (error) {
         return res.status(500).json({ message: error.message });
       }
-}
+};
 
 async function selectCompany(req, res){
     try {
-        const {id} = req.params;
-        const company = await CompanyModel.findById(id);
+        const {id} = req.body;
+        const {name} = req.body;
+        const company = await CompanyModel.findOne({ $or: [
+            { _id: id },       // Match by id
+            { name: name }     // Match by name (make sure `name` is passed in the request)
+          ]});
         if (!company) {
           return res.status(404).json({ message: 'Company not found' });
         }
-        res.status(200).json(company);
+        // Define logic to select which MongoDB cluster to connect to
+        let mongoURI;
+        if (company.name === "Surgisol") {
+            mongoURI = process.env.MONGO_URL2;
+        }
+        // else if (id === 'someConditionForCluster2') {
+        // mongoURI = process.env.MONGO_CLUSTER_2;
+        // } else {
+        // return res.status(400).json({ message: 'Invalid condition for database switching' });
+        // }
+console.log("87", mongoURI)
+        // Switch MongoDB connection to the selected cluster
+        await connectToMongoDB(mongoURI);
+
+        return res.status(200).json(company);
       } catch (error) {
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message });
       }
 }
 
@@ -98,5 +117,5 @@ module.exports = {
     seedCompanies,
     getAllCompanies,
     selectCompany,
-    getUsersByCompany
+    getUsersByCompany,
 }

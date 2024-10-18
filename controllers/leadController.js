@@ -1,4 +1,5 @@
 const Lead = require("../models/leadModel");
+const EnviroLeadModel = require("../models/enviroLeadModel")
 
 
 const addLead = async (req, res) => {
@@ -15,7 +16,52 @@ const addLead = async (req, res) => {
     return res.status(500).json({ status: false, message: err.message})
   }
     
+};
+
+  const addLeadForEnviroSolution = async (req, res) => {
+    try {
+      const data = req.body;
+      const lead = await EnviroLeadModel.create(data)
+      return res.status(201).json({ message: true, lead})
+    } catch (err) {
+      return res.status(500).json({ status: false, message: err.message})
+    }
   };
+
+  const getLeadForEnviroById = async (req, res) => {
+    try {
+      const {id} = req.params;
+      const result = await EnviroLeadModel.findOne({ _id: id })
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(500).json({ status: false, message: err.message})
+    }
+  };
+
+  const getLeadsForEnviro = async (req, res) => {
+    try {
+      const data = await EnviroLeadModel.find()
+      return res.status(200).json(data);
+    } catch (err) {
+      return res.status(500).json({ status: false, message: err.message})
+    }
+  };
+
+  const editLeadForEnviroById = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+
+      const updateLead = await EnviroLeadModel.findByIdAndUpdate(id, data, { new: true });
+      if (!updateLead) {
+        return res.status(404).json({ message: "Lead not found" });
+      }
+      return res.status(200).json({ status: true, message: "lead updated successfully", updatedLead: updateLead });
+
+    } catch (err) {
+      return res.status(500).json({ status: false, message: err.message})
+    }
+  }
   
   const getLeads = async (req, res) => {
     const data = await Lead.find()
@@ -124,4 +170,8 @@ module.exports={
     getLeads,
     getLeadById,
     editLeadById,
+    addLeadForEnviroSolution,
+    getLeadForEnviroById,
+    getLeadsForEnviro,
+    editLeadForEnviroById,
 }

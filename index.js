@@ -11,7 +11,9 @@ const customerRouter = require("./routes/customerRoutes.js");
 const productRouter = require("./routes/productRoutes.js");
 const leadRouter = require("./routes/leadRoutes.js");
 const postRouter = require("./routes/posts.js");
-const companyRouter = require("./routes/companyRoutes.js")
+const companyRouter = require("./routes/companyRoutes.js");
+const connectDB = require("./config/db.js");
+const { mURL } = require("./controllers/companyController.js");
 
 const app = express();
 
@@ -36,12 +38,11 @@ app.use("/api/product", productRouter);
 app.use("/api/lead", leadRouter);
 app.use("/api/company", companyRouter);
 
-//adding default error handling
-
-app.use((err, req, res) => {
-  res.status(500).json({ error: err.message });
+// 404 Middleware for handling routes that don't exist
+app.use((req, res, next) => {
+  res.status(404).json({ status: false, message: "Route not found" });
 });
-
+;
 mongoose
   .connect(process.env.MONGO,
     { useUnifiedTopology: true }
@@ -52,6 +53,29 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+// Create a function to handle dynamic MongoDB connections
+const connectToMongoDB = async (mongoURI) => {
+  try {
+    console.log("inde")
+    // Check if already connected to MongoDB, if so, disconnect
+    if (mongoose.connection.readyState === 1 || mongoose.connection.readyState === 2) {
+      await mongoose.disconnect();
+      console.log('Disconnected from the previous MongoDB cluster');
+    }
+
+    // Connect to the new MongoDB URI
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+
+    console.log(`Connected to new MongoDB`);
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error.message);
+    throw error;
+  }
+};
+
 
 const port = process.env.PORT || 7000;
 
@@ -59,3 +83,5 @@ app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });
 
+// Export connectToMongoDB function to be used in other files (like routes)
+// module.exports = { connectToMongoDB };
