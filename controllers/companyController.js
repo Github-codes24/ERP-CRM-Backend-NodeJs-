@@ -69,12 +69,11 @@ async function getAllCompanies(req, res){
 
 async function selectCompany(req, res){
     try {
-        const {id} = req.body;
-        const {name} = req.body;
-        const company = await CompanyModel.findOne({ $or: [
+        const {id} = req.params;
+        // const {name} = req.body;
+        const company = await CompanyModel.findOne(
             { _id: id },       // Match by id
-            { name: name }     // Match by name (make sure `name` is passed in the request)
-          ]});
+          );
         if (!company) {
           return res.status(404).json({ message: 'Company not found' });
         }
