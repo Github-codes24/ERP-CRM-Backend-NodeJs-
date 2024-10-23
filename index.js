@@ -18,7 +18,7 @@ const { mURL } = require("./controllers/companyController.js");
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:5174', '*'],
+  origin: "*",
   methods: ["GET","POST","PUT","DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -28,7 +28,7 @@ const corsOptions = {
 
 app.use(express.json());
 // app.use(cors(corsOptions));
-app.options("*", cors(corsOptions))
+app.use("*", cors(corsOptions))
 
 app.use("/api/post", postRouter);
 app.use("/api/superAdmin", superAdminRoutes);
