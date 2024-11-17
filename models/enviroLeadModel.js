@@ -42,6 +42,48 @@ const leadSchema = new mongoose.Schema({
   leadGeneratedThrough: {
     type: String,
   },
+  lastMeeting: {
+    type: String,
+  },
+  nextMeeting: {
+    type: String,
+  },
+  status: {
+    type: String,
+  },
+  panNo: {
+    type: String,
+  },
+  sprayingType: {
+    type: String,
+  },
+  tentativeBuyingDate: {
+    type: String,
+  },
+  cropType: {
+    type: String,
+  },
+  cropName: {
+    type: String,
+  },
+  sprayingDuration: {
+    type: String,
+  },
+  customerType: {
+    type: String,
+  },
+  purposeForBuying: {
+    type: String,
+  },
+  paymentMode: {
+    type: String,
+  },
+  existingLoan: {
+    type: String,
+  },
+  bankName: {
+    type: String,
+  },
 });
 
 const EnviroLeadModel = mongoose.model("enviroLead", leadSchema);
