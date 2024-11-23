@@ -142,21 +142,40 @@ const getCalenderdata = async (req, res) => {
 };
 
 
-const addSalesReport=async(req,res)=>{
-  const{organizationName}=req.body;
+const addSalesReport = async (req, res) => {
+  const { organizationName } = req.body;
+
   try {
-    let salesReport = await Sale.findOne({ organizationName }); 
+    // Check if the sales report already exists
+    let salesReport = await Sale.findOne({ organizationName });
+
     if (!salesReport) {
+      // Create a new sales report if it doesn't exist
       salesReport = new Sale(req.body);
       await salesReport.save();
-    
-    res.status(200).json(salesReport);
+
+      return res.status(201).json({
+        success: true,
+        message: 'Sales report created successfully',
+        data: salesReport,
+      });
     }
-} catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' }); 
-}
-}
+
+    // If the sales report exists, return a message
+    return res.status(400).json({
+      success: false,
+      message: 'Sales report already exists with same organization name',
+    });
+  } catch (error) {
+    // Log the error and return a 500 response
+    console.error('Error adding sales report:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+    });
+  }
+};
+
 
 
 const getSalesReport = async (req,res)=>{
