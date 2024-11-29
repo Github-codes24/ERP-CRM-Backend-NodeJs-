@@ -13,6 +13,8 @@ const superAdminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
+  
 }, {timestamps: true});
 
 const SuperAdminModel = mongoose.model('superAdmin', superAdminSchema);

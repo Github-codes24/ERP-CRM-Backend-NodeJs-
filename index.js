@@ -32,7 +32,6 @@ app.use("*", cors(corsOptions))
 
 app.use("/api/post", postRouter);
 app.use("/api/superAdmin", superAdminRoutes);
-
 app.use("/api/customer", customerRouter);
 app.use("/api/product", productRouter);
 app.use("/api/lead", leadRouter);
