@@ -64,7 +64,7 @@ const addLead = async (req, res) => {
   }
   
   const getLeads = async (req, res) => {
-    const data = await Lead.find()
+    const data = await Lead.find().select({ organizationName: 1, department: 1, customerName: 1, lastMeeting: 1, leadOwner: 1 })
     res.status(200).json(data);
   };
   
