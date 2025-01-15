@@ -30,6 +30,18 @@ app.use(express.json());
 // app.use(cors(corsOptions));
 app.use("*", cors(corsOptions))
 
+
+app.get("/", (req, res) => {
+  res.send(`
+    <html>
+      <head><title>Inventory</title></head>
+      <body>
+        <h1>Welcome to CRM</h1>
+      </body>
+    </html>
+  `);
+});
+
 app.use("/api/post", postRouter);
 app.use("/api/superAdmin", superAdminRoutes);
 
