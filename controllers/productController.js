@@ -8,7 +8,7 @@ const getTopProducts = async (req, res) => {
         // Group by productName and sum the total noOfProductsSold
         $group: {
           _id: "$productName",
-          totalProductsSold: { $sum: { $toInt: "$noOfProductsSold" } } // Convert noOfProductsSold to an integer and sum
+          totalProductsSold: { $sum: { $toDouble: "$noOfProductsSold" } } // Convert noOfProductsSold to an integer and sum
         }
       },
       {
@@ -45,6 +45,7 @@ const earningPerProduct = async (req, res) => {
 
 const earningByItem = async (req, res) => {
   try {
+    console.log("cccccc")
     // Use Mongoose aggregation to group by productName and sum the paidAmount
     const totalPaidAmount = await Sales.aggregate([
       {
@@ -52,7 +53,7 @@ const earningByItem = async (req, res) => {
         $group: {
           _id: "$productName",  // Group by productName field
           totalPaidAmount: {
-            $sum: { $toInt: "$paidAmount" }  // Convert paidAmount from string to integer and sum it
+            $sum: { $toDouble: "$paidAmount" }  // Convert paidAmount from string to integer and sum it
           }
         }
       }

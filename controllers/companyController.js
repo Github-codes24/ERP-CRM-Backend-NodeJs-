@@ -67,7 +67,7 @@ async function getAllCompanies(req, res){
       }
 };
 
-async function selectCompany(req, res){
+async function selectCompany(req, res) {
     try {
         const {id} = req.params;
         // const {name} = req.body;
