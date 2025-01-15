@@ -139,74 +139,6 @@ const getCalenderdata = async (req, res) => {
   }
 };
 
-// const getCalenderdata = async (req, res) => {
-//   try {
-//     const currentYear = new Date().getFullYear(); // Get the current year
-//     const lastFiveYearsStart = currentYear - 4; // Start year for the last 5 years
-
-//     // Pre-fill an array of years for the last 5 years and previous 5 years
-//     const years = Array.from({ length: 10 }, (_, i) => currentYear - 9 + i); // Years from (currentYear - 9) to currentYear
-
-//     // Aggregate for the last 5 and previous 5 years (within the last 10 years)
-//     const financialData = await Sale.aggregate([
-//       {
-//         // Match records where 'createdAt' is within the last 10 years
-//         $match: {
-//           createdAt: {
-//             $lte: new Date(`${currentYear}-12-31`) // End of the current year
-//           }
-//         }
-//       },
-//       {
-//         // Project a new field for year and cast 'billAmount' to number
-//         $project: {
-//           year: { $year: "$createdAt" }, // Extract the year from the 'createdAt' field
-//           billAmount: { $toDouble: "$billAmount" }, // Cast 'billAmount' to a number
-//         }
-//       },
-//       {
-//         // Group by year and sum the 'billAmount' for each year
-//         $group: {
-//           _id: { year: "$year" },
-//           totalBillAmount: { $sum: "$billAmount" }, // Sum the billAmount for each year
-//           count: { $sum: 1 } // Count the number of documents (invoices) for each year
-//         }
-//       },
-//       {
-//         // Sort the result by year in ascending order
-//         $sort: { "_id.year": 1 }
-//       }
-//     ]);
-
-//     // Initialize a dictionary with all years set to 0 for billAmount and count
-//     const yearlyData = years.map(year => ({
-//       year,
-//       totalBillAmount: 0,
-//       totalInvoices: 0
-//     }));
-
-//     // Update the yearlyData array with actual results from the aggregation
-//     financialData.forEach(data => {
-//       const index = yearlyData.findIndex(entry => entry.year === data._id.year);
-//       if (index !== -1) {
-//         yearlyData[index].totalBillAmount = data.totalBillAmount;
-//         yearlyData[index].totalInvoices = data.count;
-//       }
-//     });
-
-//     // Separate the data into last 5 years and previous 5 years
-//     const lastFiveYearsData = yearlyData.filter(entry => entry.year >= lastFiveYearsStart);
-
-//     // Prepare the final response with both last 5 years and previous 5 years data
-//     res.status(200).json({
-//       lastFiveYearsData,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-
 const addSalesReport = async (req, res) => {
   const { organizationName } = req.body;
 
@@ -243,16 +175,16 @@ const addSalesReport = async (req, res) => {
 
 
 
-const getSalesReport = async (req,res)=>{
-  try {
-    const salesReport = await Sale.find(); 
+// const getSalesReport = async (req,res)=>{
+//   try {
+//     const salesReport = await Sale.find(); 
     
-    return res.status(200).json(salesReport);
-} catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' }); 
-}
-}
+//     return res.status(200).json(salesReport);
+// } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal server error' }); 
+// }
+// }
 
 const getTotalbill=async(req,res)=>{
     try {
@@ -299,5 +231,56 @@ const getPendingbill=async(req,res)=>{
 }
 
 }
+
+const getSalesReport = async (req, res) => {
+  try {
+    // Define the dummy data
+    const dummyData = [
+      {
+        name: "Pallav",
+        totalSales: 5000,
+        salesInPercentage: "25.00",
+        noOfProductsSold: 100,
+      },
+      {
+        name: "Vaibhav",
+        totalSales: 3000,
+        salesInPercentage: "15.00",
+        noOfProductsSold: 60,
+      },
+      {
+        name: "Amit",
+        totalSales: 2000,
+        salesInPercentage: "10.00",
+        noOfProductsSold: 40,
+      },
+      {
+        name: "Narendra",
+        totalSales: 4000,
+        salesInPercentage: "20.00",
+        noOfProductsSold: 80,
+      },
+      {
+        name: "Kishan",
+        totalSales: 2500,
+        salesInPercentage: "12.50",
+        noOfProductsSold: 50,
+      },
+      {
+        name: "Company",
+        totalSales: 3500,
+        salesInPercentage: "17.50",
+        noOfProductsSold: 70,
+      },
+    ];
+
+    // Send the dummy data in the response
+    return res.status(200).json({ data: dummyData });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 module.exports= {setCompany,getFinancialdata,getCalenderdata,addSalesReport, getSalesReport, getTotalbill, getClearedbill,getPendingbill};

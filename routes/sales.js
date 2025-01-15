@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { setCompany,getFinancialdata,getCalenderdata,addSalesReport, getSalesReport,
-    getTotalbill,getClearedbill,getPendingbill} = require('../controllers/posts');
+    getTotalbill,getClearedbill,getPendingbill} = require('../controllers/salesController');
 
 const router = express.Router();
 const companyMiddleware = require("../middlewares/companyMiddleware");
