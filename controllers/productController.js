@@ -3,30 +3,49 @@ const Sales = require("../models/saleModel");
 
 const getTopProducts = async (req, res) => {
   try {
-    const topProducts = await Sales.aggregate([
+    const salesData = await Sales.aggregate([
       {
         // Group by productName and sum the total noOfProductsSold
         $group: {
           _id: "$productName",
-          totalProductsSold: { $sum: { $toDouble: "$noOfProductsSold" } } // Convert noOfProductsSold to an integer and sum
-        }
+          totalProductsSold: { $sum: { $toDouble: "$noOfProductsSold" } }, // Convert to double and sum
+        },
       },
       {
-        // Sort the products by the total number of products sold in descending order
-        $sort: { totalProductsSold: -1 }
+        // Add a field to store the product's popularity (totalProductsSold)
+        $addFields: { popularity: "$totalProductsSold" },
       },
       {
-        // Limit the number of top products (optional, you can change the limit)
-        $limit: 5
-      }
+        // Sort by total number of products sold in descending order
+        $sort: { totalProductsSold: -1 },
+      },
     ]);
+
+    // Calculate the total sales across all products
+    const totalSales = salesData.reduce(
+      (acc, product) => acc + product.totalProductsSold,
+      0
+    );
+
+    const maxPopularity = Math.max(...salesData.map((product) => product.popularity));
+
+    const formattedData = salesData.map((product) => ({
+      productName: product._id,
+      popularity: product.popularity,
+      normalizedPopularity: (product.popularity / maxPopularity) * 100, // Normalized to max
+      salesPercentage: ((product.totalProductsSold / totalSales) * 100).toFixed(2),
+    }));
+
+    // Optionally limit the top products
+    const topProducts = formattedData.slice(0, 5); // Adjust limit as needed
 
     res.status(200).json(topProducts);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 
 const earningPerProduct = async (req, res) => {
@@ -45,7 +64,6 @@ const earningPerProduct = async (req, res) => {
 
 const earningByItem = async (req, res) => {
   try {
-    console.log("cccccc")
     // Use Mongoose aggregation to group by productName and sum the paidAmount
     const totalPaidAmount = await Sales.aggregate([
       {
