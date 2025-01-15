@@ -63,16 +63,49 @@ const addLead = async (req, res) => {
     }
   }
   
-  const getLeads = async (req, res) => {
-    const data = await Lead.find().select({ organizationName: 1, department: 1, customerName: 1, lastMeeting: 1, leadOwner: 1 })
-    res.status(200).json(data);
-  };
-  
-  const getLeadById = async (req, res) => {
-    const {id} = req.params;
-    const result = await Lead.findOne({ _id: id })
-    res.status(200).json(result);
-  };
+ const getLeads = async (req, res) => {
+  try {
+    // Fetch leads with the specified fields
+    const data = await Lead.find().select({
+      organizationName: 1,
+      department: 1,
+      customerName: 1,
+      lastMeeting: 1,
+      leadOwner: 1,
+    });
+
+    // Check if data is empty
+    if (data.length === 0) {
+      return res.status(404).json({ message: "No leads found." });
+    }
+
+    // Respond with the fetched data
+    return res.status(200).json({ message: "Leads retrieved successfully.", data });
+  } catch (error) {
+    console.error("Error fetching leads:", error);
+    return res.status(500).json({ message: "Internal server error.", error: error.message });
+  }
+};
+
+const getLeadById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Fetch the lead by ID
+    const result = await Lead.findById(id);
+
+    // Check if the lead exists
+    if (!result) {
+      return res.status(404).json({ message: "Lead not found." });
+    }
+
+    // Respond with the fetched lead
+    return res.status(200).json({ message: "Lead retrieved successfully.", data: result });
+  } catch (error) {
+    console.error("Error fetching lead by ID:", error);
+    return res.status(500).json({ message: "Internal server error.", error: error.message });
+  }
+};
 
 const editLeadById = async (req, res) => {
   try {
