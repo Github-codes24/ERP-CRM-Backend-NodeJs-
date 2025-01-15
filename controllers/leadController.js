@@ -163,6 +163,28 @@ const editLeadById = async (req, res) => {
   }
 };
 
+const getCallObjectives = async (req, res) => {
+  try {
+    // Dummy data
+    const callObjectives = [
+     "Attending Doctor",
+     "OPD Call",
+     "Product Demo",
+     "Clinical Study",
+     "Clinical Paper",
+     "Other"
+    ];
+
+    // Send the response
+    res.status(200).json({
+      message: "Dummy call objectives retrieved successfully.",
+      data: callObjectives,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
 
 
 module.exports={
@@ -174,4 +196,5 @@ module.exports={
     getLeadForEnviroById,
     getLeadsForEnviro,
     editLeadForEnviroById,
+    getCallObjectives,
 }
