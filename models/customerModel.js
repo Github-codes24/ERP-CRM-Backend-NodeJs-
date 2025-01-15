@@ -67,7 +67,6 @@ const otherSchema = new mongoose.Schema({
 
 const customerSchema = new mongoose.Schema({
   workplace1: { type: workplaceSchema, required: true },
-  workplace2: { type: workplaceSchema, required: true },
   addHod: { type: hodSchema, required: true },
   other: { type: otherSchema, required: true },
   quotationInTheNameDesignation: { type: String, required: true },
