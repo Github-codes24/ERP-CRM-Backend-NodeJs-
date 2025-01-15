@@ -22,6 +22,71 @@ const setCompany = async (req, res) => {
 const getFinancialdata = async (req, res) => {
   try {
     const currentYear = new Date().getFullYear(); // Get the current year
+    const currentMonth = new Date().getMonth() + 1; // Get the current month (0-indexed, so add 1)
+    
+    // Determine the start and end of the financial year
+    const startYear = currentMonth >= 4 ? currentYear : currentYear - 1; // If April or later, startYear is the current year; otherwise, it's the previous year
+    const endYear = startYear + 1;
+
+    const startDate = new Date(`${startYear}-04-01`); // Financial year starts in April
+    const endDate = new Date(`${endYear}-03-31`);    // Financial year ends in March
+
+    const salesData = await Sale.aggregate([
+      {
+        // Match records where 'createdAt' is within the financial year
+        $match: {
+          createdAt: {
+            $gte: startDate, // Start of the financial year
+            $lte: endDate    // End of the financial year
+          }
+        }
+      },
+      {
+        // Project a new field for month and cast 'billAmount' to number
+        $project: {
+          month: { $month: "$createdAt" }, // Extract the month from the 'createdAt' field
+          billAmount: { $toDouble: "$billAmount" }, // Cast 'billAmount' to a number
+        }
+      },
+      {
+        // Group by month and sum the 'billAmount' for each month
+        $group: {
+          _id: { month: "$month" },
+          totalBillAmount: { $sum: "$billAmount" }, // Sum the billAmount for each month
+          count: { $sum: 1 } // Count the number of documents (invoices) for each month
+        }
+      },
+      {
+        // Sort the result by month in ascending order (Jan to Dec)
+        $sort: { "_id.month": 1 }
+      }
+    ]);
+
+    // Define an array of financial year month names (April to March)
+    const financialYearMonths = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
+
+    // Format the response for the financial year (April to March)
+    const monthlyData = Array.from({ length: 12 }, (_, i) => ({
+      month: financialYearMonths[i], // Financial year months
+      totalBillAmount: 0, // Default to 0 if no data for the month
+    }));
+
+    // Update the monthlyData array with actual results
+    salesData.forEach(data => {
+      const monthIndex = (data._id.month >= 4 ? data._id.month - 4 : data._id.month + 8); // Adjust index for financial year
+      monthlyData[monthIndex].totalBillAmount = data.totalBillAmount;
+    });
+
+    res.status(200).json({ financialYear: `${startYear}-${endYear}`, monthlyData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+const getCalenderdata = async (req, res) => {
+  try {
+    const currentYear = new Date().getFullYear(); // Get the current year
 
     const salesData = await Sale.aggregate([
       {
@@ -74,72 +139,72 @@ const getFinancialdata = async (req, res) => {
   }
 };
 
-const getCalenderdata = async (req, res) => {
-  try {
-    const currentYear = new Date().getFullYear(); // Get the current year
-    const lastFiveYearsStart = currentYear - 4; // Start year for the last 5 years
+// const getCalenderdata = async (req, res) => {
+//   try {
+//     const currentYear = new Date().getFullYear(); // Get the current year
+//     const lastFiveYearsStart = currentYear - 4; // Start year for the last 5 years
 
-    // Pre-fill an array of years for the last 5 years and previous 5 years
-    const years = Array.from({ length: 10 }, (_, i) => currentYear - 9 + i); // Years from (currentYear - 9) to currentYear
+//     // Pre-fill an array of years for the last 5 years and previous 5 years
+//     const years = Array.from({ length: 10 }, (_, i) => currentYear - 9 + i); // Years from (currentYear - 9) to currentYear
 
-    // Aggregate for the last 5 and previous 5 years (within the last 10 years)
-    const financialData = await Sale.aggregate([
-      {
-        // Match records where 'createdAt' is within the last 10 years
-        $match: {
-          createdAt: {
-            $lte: new Date(`${currentYear}-12-31`) // End of the current year
-          }
-        }
-      },
-      {
-        // Project a new field for year and cast 'billAmount' to number
-        $project: {
-          year: { $year: "$createdAt" }, // Extract the year from the 'createdAt' field
-          billAmount: { $toDouble: "$billAmount" }, // Cast 'billAmount' to a number
-        }
-      },
-      {
-        // Group by year and sum the 'billAmount' for each year
-        $group: {
-          _id: { year: "$year" },
-          totalBillAmount: { $sum: "$billAmount" }, // Sum the billAmount for each year
-          count: { $sum: 1 } // Count the number of documents (invoices) for each year
-        }
-      },
-      {
-        // Sort the result by year in ascending order
-        $sort: { "_id.year": 1 }
-      }
-    ]);
+//     // Aggregate for the last 5 and previous 5 years (within the last 10 years)
+//     const financialData = await Sale.aggregate([
+//       {
+//         // Match records where 'createdAt' is within the last 10 years
+//         $match: {
+//           createdAt: {
+//             $lte: new Date(`${currentYear}-12-31`) // End of the current year
+//           }
+//         }
+//       },
+//       {
+//         // Project a new field for year and cast 'billAmount' to number
+//         $project: {
+//           year: { $year: "$createdAt" }, // Extract the year from the 'createdAt' field
+//           billAmount: { $toDouble: "$billAmount" }, // Cast 'billAmount' to a number
+//         }
+//       },
+//       {
+//         // Group by year and sum the 'billAmount' for each year
+//         $group: {
+//           _id: { year: "$year" },
+//           totalBillAmount: { $sum: "$billAmount" }, // Sum the billAmount for each year
+//           count: { $sum: 1 } // Count the number of documents (invoices) for each year
+//         }
+//       },
+//       {
+//         // Sort the result by year in ascending order
+//         $sort: { "_id.year": 1 }
+//       }
+//     ]);
 
-    // Initialize a dictionary with all years set to 0 for billAmount and count
-    const yearlyData = years.map(year => ({
-      year,
-      totalBillAmount: 0,
-      totalInvoices: 0
-    }));
+//     // Initialize a dictionary with all years set to 0 for billAmount and count
+//     const yearlyData = years.map(year => ({
+//       year,
+//       totalBillAmount: 0,
+//       totalInvoices: 0
+//     }));
 
-    // Update the yearlyData array with actual results from the aggregation
-    financialData.forEach(data => {
-      const index = yearlyData.findIndex(entry => entry.year === data._id.year);
-      if (index !== -1) {
-        yearlyData[index].totalBillAmount = data.totalBillAmount;
-        yearlyData[index].totalInvoices = data.count;
-      }
-    });
+//     // Update the yearlyData array with actual results from the aggregation
+//     financialData.forEach(data => {
+//       const index = yearlyData.findIndex(entry => entry.year === data._id.year);
+//       if (index !== -1) {
+//         yearlyData[index].totalBillAmount = data.totalBillAmount;
+//         yearlyData[index].totalInvoices = data.count;
+//       }
+//     });
 
-    // Separate the data into last 5 years and previous 5 years
-    const lastFiveYearsData = yearlyData.filter(entry => entry.year >= lastFiveYearsStart);
+//     // Separate the data into last 5 years and previous 5 years
+//     const lastFiveYearsData = yearlyData.filter(entry => entry.year >= lastFiveYearsStart);
 
-    // Prepare the final response with both last 5 years and previous 5 years data
-    res.status(200).json({
-      lastFiveYearsData,
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     // Prepare the final response with both last 5 years and previous 5 years data
+//     res.status(200).json({
+//       lastFiveYearsData,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 
 const addSalesReport = async (req, res) => {
