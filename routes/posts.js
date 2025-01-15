@@ -4,6 +4,8 @@ const { setCompany,getFinancialdata,getCalenderdata,addSalesReport, getSalesRepo
     getTotalbill,getClearedbill,getPendingbill} = require('../controllers/posts');
 
 const router = express.Router();
+const companyMiddleware = require("../middlewares/companyMiddleware");
+router.use(companyMiddleware);
 
 router.post('/setCompany', setCompany);
 router.get('/getFinancialdata', getFinancialdata);
