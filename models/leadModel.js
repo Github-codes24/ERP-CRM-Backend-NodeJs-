@@ -57,7 +57,6 @@ const leadSchema = new mongoose.Schema({
   },
   targetDepartment: {
     type: String,
-    required: true,
   },
   discussionPoint: {
     type: [String],
