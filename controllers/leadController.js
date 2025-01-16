@@ -11,7 +11,7 @@ const addLead = async (req, res) => {
     }
     const lead = new Lead(leadData);
     const datasave = await lead.save();
-    return res.status(200).json(datasave);
+    return res.status(200).json({ success: true, datasave});
   } catch (err) {
     return res.status(500).json({ status: false, message: err.message})
   }
@@ -22,6 +22,16 @@ const addLead = async (req, res) => {
       const data = req.body;
       const lead = await EnviroLeadModel.create(data)
       return res.status(201).json({ message: true, lead})
+    } catch (err) {
+      return res.status(500).json({ status: false, message: err.message})
+    }
+  };
+
+  const customerTypeForEnviroSolution = async (req, res) => {
+    try {
+      const data = [ "farmer", "government official", "other"];
+
+      return res.status(201).json({ success: true, data })
     } catch (err) {
       return res.status(500).json({ status: false, message: err.message})
     }
@@ -218,13 +228,13 @@ const getCallObjectives = async (req, res) => {
   }
 };
 
-
 module.exports={
     addLead,
     getLeads,
     getLeadById,
     editLeadById,
     addLeadForEnviroSolution,
+    customerTypeForEnviroSolution,
     getLeadForEnviroById,
     getLeadsForEnviro,
     editLeadForEnviroById,
