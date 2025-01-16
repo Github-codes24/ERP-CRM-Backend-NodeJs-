@@ -111,4 +111,22 @@ const getTopProductsForHome = async (req, res) => {
   }
 };
 
-module.exports = { getFinancialdataForHome, getCalendarYearDataForHome, getTopProductsForHome };
+const earningByCompany = async (req, res) => {
+  try {
+    // Define dummy data for each company and product
+    const companyEarnings = [
+      { companyName: "Unisol", productName: "Solar Panel Pro", earning: Math.random() * 5000 + 1000 },
+      { companyName: "Surgisol", productName: "Surgical Kit Advanced", earning: Math.random() * 5000 + 1000 },
+      { companyName: "Envirosol", productName: "Eco Cleaner Max", earning: Math.random() * 5000 + 1000 },
+      { companyName: "IgniteSphere", productName: "HeatWave Generator", earning: Math.random() * 5000 + 1000 }
+    ];
+
+    // Send the result back with earnings grouped by product and company
+    return res.status(200).json({ data: companyEarnings });
+  } catch (error) {
+    console.error('Error calculating total paid amount:', error);
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+module.exports = { getFinancialdataForHome, getCalendarYearDataForHome, getTopProductsForHome, earningByCompany };
