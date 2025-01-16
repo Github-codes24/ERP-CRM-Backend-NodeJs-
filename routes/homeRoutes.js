@@ -4,5 +4,6 @@ const homeController = require("../controllers/homeController");
 
 router.get('/getFinancialdataForHome',homeController.getFinancialdataForHome);
 router.get('/getCalendarYearDataForHome',homeController.getCalendarYearDataForHome);
+router.get('/getTopProductsForHome',homeController.getTopProductsForHome);
 
 module.exports = router;

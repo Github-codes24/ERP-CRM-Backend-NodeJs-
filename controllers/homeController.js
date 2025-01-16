@@ -77,4 +77,38 @@ const getCalendarYearDataForHome = async (req, res) => {
   }
 };
 
-module.exports = { getFinancialdataForHome, getCalendarYearDataForHome };
+const getTopProductsForHome = async (req, res) => {
+  try {
+    // Define companies and their respective products
+    const companyProducts = [
+      { companyName: "Unisol", productNames: ["Solar Panel Pro", "Energy Saver XL", "Solar Battery 500"] },
+      { companyName: "Surgisol", productNames: ["Surgical Kit Advanced", "OrthoCare Tools", "Precision Scalpel"] },
+      { companyName: "Envirosol", productNames: ["Eco Cleaner Max", "Green Bin Pro", "RecycloMat"] },
+      { companyName: "IgniteSphere", productNames: ["Ignition Spark 3000", "Flame Torch X", "HeatWave Generator"] }
+    ];
+
+    // Generate random sales data for each product
+    const dummyData = companyProducts.flatMap((company) =>
+      company.productNames.map((productName) => {
+        const noOfProductsSold = Math.floor(Math.random() * 500 + 100); // Random no. of products sold: 100 to 600
+        const popularity = noOfProductsSold; // Popularity is set as the total no. of products sold
+        const salesPercentage = Math.random() * 100; // Random sales percentage: 0 to 100
+
+        return {
+          companyName: company.companyName,
+          productName,
+          noOfProductsSold, // Add the no. of products sold
+          popularity, // Add the popularity
+          salesPercentage: salesPercentage.toFixed(2), // Keep sales percentage
+        };
+      })
+    );
+
+    res.status(200).json({ data: dummyData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { getFinancialdataForHome, getCalendarYearDataForHome, getTopProductsForHome };
