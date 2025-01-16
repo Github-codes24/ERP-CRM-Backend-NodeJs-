@@ -23,10 +23,10 @@ const leadSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  area: {
-    type: String,
-    required: true,
-  },
+  // area: {
+  //   type: String,
+  //   required: true,
+  // },
   productPromoted: {
     type: String,
     required: true,
