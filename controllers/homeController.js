@@ -325,10 +325,62 @@ const getSalesReportForHome = async (req, res) => {
   }
 };
 
+const getTopCustomerForHome = async (req, res) => {
+  try {
+    // Dummy data for the companies and their respective single workplace
+    const companyWorkplaces = {
+      Unisol: "Workplace A",
+      Surgisol: "Workplace X",
+      Envirosol: "Workplace 1",
+      IgniteSphere: "Workplace Alpha"
+    };
+
+    // Function to convert milliseconds to a duration breakdown
+    const getDuration = (startDate) => {
+      const now = new Date();
+      const diffTime = Math.abs(now - new Date(startDate));
+
+      // Calculate breakdown
+      const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+      return `${days} days`; // Simplified to just days
+    };
+
+    // Generate dummy data for each company and their single workplace
+    const result = Object.entries(companyWorkplaces).map(([company, workplace]) => {
+      // Generating random createdAt dates for each workplace (within the last year)
+      const randomDate = new Date(
+        Date.now() - Math.floor(Math.random() * 365 * 24 * 60 * 60 * 1000) // Random date within the last year
+      );
+
+      return {
+        companyName: company,
+        workplaceName: workplace,
+        duration: getDuration(randomDate), // Get the duration based on createdAt
+      };
+    });
+
+    // Send the result
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error fetching top customers:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
+
 module.exports = {
   getFinancialdataForHome,
   getCalendarYearDataForHome,
   getTopProductsForHome,
   earningByCompany,
   getSalesReportForHome,
+  getTopCustomerForHome,
 };

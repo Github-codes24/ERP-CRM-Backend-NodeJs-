@@ -7,5 +7,6 @@ router.get('/getCalendarYearDataForHome',homeController.getCalendarYearDataForHo
 router.get('/getTopProductsForHome',homeController.getTopProductsForHome);
 router.get('/earningByCompany',homeController.earningByCompany);
 router.get('/getSalesReportForHome',homeController.getSalesReportForHome);
+router.get('/getTopCustomerForHome',homeController.getTopCustomerForHome);
 
 module.exports = router;
