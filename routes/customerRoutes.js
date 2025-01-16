@@ -10,5 +10,6 @@ router.get('/getCustomerDetails',customerController.getCustomerDetails);
 router.get('/getCustomerById/:id',customerController.getCustomerById);
 router.get('/getOrganizationNames',customerController.getOrganizationNames);
 router.get('/getOrganizationTypes',customerController.getOrganizationTypes);
+router.get('/getOrganizationStatus',customerController.getOrganizationStatus);
 
 module.exports=router;
