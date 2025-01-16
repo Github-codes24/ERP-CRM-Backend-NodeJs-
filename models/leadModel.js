@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const leadSchema = new mongoose.Schema({
   organizationName: {
-    type: String,
+    type: [String],
     required: true,
   },
   department: {

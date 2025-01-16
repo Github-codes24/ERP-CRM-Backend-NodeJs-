@@ -7,8 +7,8 @@ const addLead = async (req, res) => {
     const leadData = req.body;
     if (!Array.isArray(leadData.leadGenratedThrough) || 
     !leadData.leadGenratedThrough.every(item => typeof item === 'string')) {
-  return res.status(400).json({ status: false, message: "pass leadGenratedThrough as an array of strings" });
-}
+      return res.status(400).json({ status: false, message: "pass leadGenratedThrough as an array of strings" });
+    }
     const lead = new Lead(leadData);
     const datasave = await lead.save();
     return res.status(200).json(datasave);
