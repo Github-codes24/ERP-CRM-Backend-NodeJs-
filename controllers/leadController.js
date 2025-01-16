@@ -15,7 +15,6 @@ const addLead = async (req, res) => {
   } catch (err) {
     return res.status(500).json({ status: false, message: err.message})
   }
-    
 };
 
   const addLeadForEnviroSolution = async (req, res) => {

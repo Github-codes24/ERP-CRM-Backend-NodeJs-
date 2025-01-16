@@ -127,10 +127,28 @@ const getOrganizationNames = async (req, res) => {
   }
 };
 
+const getOrganizationTypes = async (req, res) => {
+  try {
+    const organizationTypes = [
+      "Government",
+      "Stand alone",
+      "Private",
+      "Corporate",
+      "other"
+    ];
+    // Send response with the customer data
+    return res.status(200).json({ status: true, organizationTypes: organizationTypes });
+  } catch (error) {
+    console.error("Error creating tender:", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getTopCustomer,
   addCustomer,
   getCustomerDetails,
   getCustomerById,
   getOrganizationNames,
+  getOrganizationTypes,
 };
