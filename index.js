@@ -12,6 +12,7 @@ const productRouter = require("./routes/productRoutes.js");
 const leadRouter = require("./routes/leadRoutes.js");
 const postRouter = require("./routes/sales.js");
 const companyRouter = require("./routes/companyRoutes.js");
+const homeRouter = require("./routes/homeRoutes.js");
 const connectDB = require("./config/db.js");
 const { mURL } = require("./controllers/companyController.js");
 
@@ -46,6 +47,7 @@ app.use("/api/customer", customerRouter);
 app.use("/api/product", productRouter);
 app.use("/api/lead", leadRouter);
 app.use("/api/company", companyRouter);
+app.use("/api/home", homeRouter);
 
 // 404 Middleware for handling routes that don't exist
 app.use((req, res, next) => {
