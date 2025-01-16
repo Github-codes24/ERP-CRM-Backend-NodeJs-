@@ -12,6 +12,7 @@ router.put('/editLeadById/:id',leadController.editLeadById);
 
 // routes for enviro solutions
 router.post('/addLeadForEnviro',leadController.addLeadForEnviroSolution);
+router.post('/getCustomerTypeForEnviroSolution',leadController.getCustomerTypeForEnviroSolution);
 router.get('/getLeadForEnviroById/:id',leadController.getLeadForEnviroById);
 router.get('/getLeadsForEnviro',leadController.getLeadsForEnviro);
 router.put('/editLeadForEnviroById/:id',leadController.editLeadForEnviroById);

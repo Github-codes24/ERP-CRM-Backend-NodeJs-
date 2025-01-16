@@ -27,7 +27,7 @@ const addLead = async (req, res) => {
     }
   };
 
-  const customerTypeForEnviroSolution = async (req, res) => {
+  const getCustomerTypeForEnviroSolution = async (req, res) => {
     try {
       const data = [ "farmer", "government official", "other"];
 
@@ -234,7 +234,7 @@ module.exports={
     getLeadById,
     editLeadById,
     addLeadForEnviroSolution,
-    customerTypeForEnviroSolution,
+    getCustomerTypeForEnviroSolution,
     getLeadForEnviroById,
     getLeadsForEnviro,
     editLeadForEnviroById,
