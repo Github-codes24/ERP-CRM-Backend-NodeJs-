@@ -375,6 +375,16 @@ const getTopCustomerForHome = async (req, res) => {
   }
 };
 
+const totalSalesOfAllCompanies = async (req, res) => {
+  try {
+    const totalSales = "8468000";
+
+    return res.status(200).json({ success: true, totalSales });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+}
 
 module.exports = {
   getFinancialdataForHome,
@@ -383,4 +393,5 @@ module.exports = {
   earningByCompany,
   getSalesReportForHome,
   getTopCustomerForHome,
+  totalSalesOfAllCompanies
 };
