@@ -72,6 +72,12 @@ const leadSchema = new mongoose.Schema({
   customerType: {
     type: String,
   },
+  department: {
+    type: String,
+  },
+  taluka: {
+    type: String,
+  },
   purposeForBuying: {
     type: String,
   },
