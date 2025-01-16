@@ -81,10 +81,10 @@ const getTopProductsForHome = async (req, res) => {
   try {
     // Define companies and their respective products
     const companyProducts = [
-      { companyName: "Unisol", productNames: ["Solar Panel Pro", "Energy Saver XL", "Solar Battery 500"] },
-      { companyName: "Surgisol", productNames: ["Surgical Kit Advanced", "OrthoCare Tools", "Precision Scalpel"] },
-      { companyName: "Envirosol", productNames: ["Eco Cleaner Max", "Green Bin Pro", "RecycloMat"] },
-      { companyName: "IgniteSphere", productNames: ["Ignition Spark 3000", "Flame Torch X", "HeatWave Generator"] }
+      { companyName: "Unisol", productNames: ["Solar Panel Pro"] },
+      { companyName: "Surgisol", productNames: ["Surgical Kit Advanced"] },
+      { companyName: "Envirosol", productNames: ["Eco Cleaner Max"] },
+      { companyName: "IgniteSphere", productNames: ["Ignition Spark 3000"] }
     ];
 
     // Generate random sales data for each product
