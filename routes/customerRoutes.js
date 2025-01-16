@@ -8,5 +8,6 @@ router.get('/getTopCustomer',customerController.getTopCustomer);
 router.post('/addCustomer',customerController.addCustomer);
 router.get('/getCustomerDetails',customerController.getCustomerDetails);
 router.get('/getCustomerById/:id',customerController.getCustomerById);
+router.get('/getOrganizationNames',customerController.getOrganizationNames);
 
 module.exports=router;
