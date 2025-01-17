@@ -72,15 +72,16 @@ const addLead = async (req, res) => {
     }
   }
   
- const getLeads = async (req, res) => {
+  const getLeads = async (req, res) => {
   try {
-    // Fetch leads with the specified fields
+    // Fetch leads with the specified fields and include the total number of calls
     const data = await Lead.find().select({
       organizationName: 1,
       department: 1,
       customerName: 1,
       lastMeeting: 1,
       leadOwner: 1,
+      nextFollowUp: 1, // Include nextFollowUp to calculate total calls
     });
 
     // Check if data is empty
@@ -88,11 +89,25 @@ const addLead = async (req, res) => {
       return res.status(404).json({ message: "No leads found." });
     }
 
-    // Respond with the fetched data
-    return res.status(200).json({ message: "Leads retrieved successfully.", data });
+    // Calculate the total number of calls for each lead
+    const leadsWithCallCount = data.map((lead) => ({
+      organizationName: lead.organizationName,
+      department: lead.department,
+      customerName: lead.customerName,
+      lastMeeting: lead.lastMeeting,
+      leadOwner: lead.leadOwner,
+      totalCalls: (lead.nextFollowUp || []).length + 1, // Total calls from nextFollowUp array
+    }));
+
+    // Respond with the processed data
+    return res
+      .status(200)
+      .json({ message: "Leads retrieved successfully.", data: leadsWithCallCount });
   } catch (error) {
     console.error("Error fetching leads:", error);
-    return res.status(500).json({ message: "Internal server error.", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Internal server error.", error: error.message });
   }
 };
 
