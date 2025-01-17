@@ -43,7 +43,7 @@ const getTopCustomer = async (req, res) => {
 const addCustomer = async (req, res) => {
   const {
     workplace1,
-    addHod,
+    addLead,
     other,
     quotationInTheNameDesignation,
     salesPersonName,
@@ -51,7 +51,7 @@ const addCustomer = async (req, res) => {
 
   const newCustomer = new Customer({
     workplace1,
-    addHod,
+    addLead,
     other,
     quotationInTheNameDesignation,
     salesPersonName,
