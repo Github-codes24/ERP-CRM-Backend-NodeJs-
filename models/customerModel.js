@@ -143,8 +143,8 @@ const customerSchema = new mongoose.Schema({
   workplace1: { type: workplaceSchema, required: true },
   addLead: { type: leadSchema, required: true },
   other: { type: otherSchema, required: true },
-  quotationInTheNameDesignation: { type: String, required: true },
-  salesPersonName: { type: String, required: true }
+  // quotationInTheNameDesignation: { type: String, required: true },
+  // salesPersonName: { type: String, required: true }
 }, { timestamps: true });
     
 const Customer = mongoose.model('Customer', customerSchema);
