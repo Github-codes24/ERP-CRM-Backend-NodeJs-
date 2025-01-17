@@ -7,6 +7,7 @@ const companyMiddleware = require("../middlewares/companyMiddleware");
 router.post('/addLead',leadController.addLead);
 router.get('/getLeads',leadController.getLeads);
 router.get('/getCallObjectives',leadController.getCallObjectives);
+router.get('/getProductToBePromoted',leadController.getProductToBePromoted);
 router.get('/getLeadById/:id',leadController.getLeadById);
 router.put('/editLeadById/:id',leadController.editLeadById);
 

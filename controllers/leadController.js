@@ -11,7 +11,7 @@ const addLead = async (req, res) => {
     }
     const lead = new Lead(leadData);
     const datasave = await lead.save();
-    return res.status(200).json({ success: true, datasave});
+    return res.status(200).json({ success: true, message: "lead added successfully", datasave});
   } catch (err) {
     return res.status(500).json({ status: false, message: err.message})
   }
@@ -228,6 +228,29 @@ const getCallObjectives = async (req, res) => {
   }
 };
 
+const getProductToBePromoted = async (req, res) => {
+  try {
+    // Dummy data
+    const products = [
+     "Surgical Mask",
+      "Hand Sanitizer",
+      "Patient Monitor",
+      "X-Ray Machine",
+      "Ultrasound Gel",
+      "Defibrillator",
+    ];
+
+    // Send the response
+    res.status(200).json({
+      message: "Products list retrieved successfully.",
+      data: products,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
+
 module.exports={
     addLead,
     getLeads,
@@ -239,4 +262,5 @@ module.exports={
     getLeadsForEnviro,
     editLeadForEnviroById,
     getCallObjectives,
+    getProductToBePromoted,
 }
