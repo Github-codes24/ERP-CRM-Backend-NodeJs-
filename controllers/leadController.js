@@ -21,7 +21,7 @@ const addLead = async (req, res) => {
     try {
       const data = req.body;
       const lead = await EnviroLeadModel.create(data)
-      return res.status(201).json({ message: true, lead})
+      return res.status(201).json({ success: true, message: "lead successfully added for enviro", lead})
     } catch (err) {
       return res.status(500).json({ status: false, message: err.message})
     }
