@@ -9,7 +9,6 @@ const leadSchema = new mongoose.Schema({
   },
   leadOwner: {
     type: String,
-    required: true,
   },
   productName: {
     type: String,
