@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 // Define the schema for Organization Names (Workplace 1 and Workplace 2)
 const workplaceSchema = new mongoose.Schema({
   workplaceName: { type: String, required: true },

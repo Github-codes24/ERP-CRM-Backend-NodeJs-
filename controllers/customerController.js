@@ -59,7 +59,7 @@ const addCustomer = async (req, res) => {
 
   try {
     const savedCustomer = await newCustomer.save();
-    res.status(201).json(savedCustomer);
+    res.status(201).json({ success: true, message: "customer added successfully", savedCustomer});
   } catch (error) {
     console.error("Error creating tender:", error);
     return res.status(500).json({ message: error.message });
