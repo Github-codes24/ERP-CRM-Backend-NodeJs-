@@ -91,6 +91,7 @@ const addLead = async (req, res) => {
 
     // Calculate the total number of calls for each lead
     const leadsWithCallCount = data.map((lead) => ({
+      _id: lead._id,
       organizationName: lead.organizationName,
       department: lead.department,
       customerName: lead.customerName,
