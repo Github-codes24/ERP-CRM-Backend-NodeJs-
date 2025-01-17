@@ -13,7 +13,9 @@ const workplaceSchema = new mongoose.Schema({
   totalBeds: { type: String, required: true },
   totalICU: { type: String, required: true },
   totalOperationTheater: { type: String, required: true },
-  totalNoOfMIS: { type: String, required: true }
+  totalNoOfMIS: { type: String, required: true },
+  quotationInTheNameDesignation: { type: String, required: true },
+  salesPersonName: { type: String, required: true }
 });
 
 // Define the schema for AddHod object
@@ -143,8 +145,6 @@ const customerSchema = new mongoose.Schema({
   workplace1: { type: workplaceSchema, required: true },
   addLead: { type: leadSchema, required: true },
   other: { type: otherSchema, required: true },
-  // quotationInTheNameDesignation: { type: String, required: true },
-  // salesPersonName: { type: String, required: true }
 }, { timestamps: true });
     
 const Customer = mongoose.model('Customer', customerSchema);
