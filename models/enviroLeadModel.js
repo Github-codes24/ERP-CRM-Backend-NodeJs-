@@ -39,16 +39,16 @@ const leadSchema = new mongoose.Schema({
     type: String,
   },
   leadGeneratedThrough: {
-    type: String,
+    type: [String],
   },
   lastMeeting: {
     type: String,
   },
   nextMeeting: {
-    type: String,
+    type: [String],
   },
   status: {
-    type: String,
+    type: [String],
   },
   panNo: {
     type: String,
