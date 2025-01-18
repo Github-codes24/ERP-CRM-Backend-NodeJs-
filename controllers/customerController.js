@@ -226,7 +226,7 @@ const getOrganizationStatus = async (req, res) => {
 module.exports = {
   getTopCustomer,
   addCustomer,
-  editCustomer,
+  editCustomerById,
   getCustomerDetails,
   getCustomerById,
   getOrganizationNames,

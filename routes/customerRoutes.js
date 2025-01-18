@@ -10,7 +10,7 @@ router.get('/getCustomerDetails',customerController.getCustomerDetails);
 router.get('/getTotalCustomerNo',customerController.getTotalCustomerNo);
 
 router.get('/getCustomerById/:id',customerController.getCustomerById);
-router.get('/getCustomerById/:id',customerController.editCustomer);
+router.put('/editCustomerById/:id',customerController.editCustomerById);
 
 router.get('/getOrganizationNames',customerController.getOrganizationNames);
 router.get('/getOrganizationTypes',customerController.getOrganizationTypes);
