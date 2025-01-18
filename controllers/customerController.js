@@ -66,6 +66,50 @@ const addCustomer = async (req, res) => {
   }
 };
 
+const editCustomerById = async (req, res) => {
+  try {
+    const { id } = req.params; // Assuming the customer's ID is provided in the route parameter
+    const updateData = req.body; // The fields to update are sent in the request body
+
+    // Validate the presence of an ID
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Customer ID is required to update the customer.",
+      });
+    };
+
+    // Find the customer by ID and update with the provided data
+    const updatedCustomer = await Customer.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true, runValidators: true } // Return the updated document and validate data
+    );
+
+    if (!updatedCustomer) {
+      return res.status(404).json({
+        success: false,
+        message: "Customer not found with the provided ID.",
+      });
+    }
+
+    // Send the updated customer in the response
+    return res.status(200).json({
+      success: true,
+      message: "Customer updated successfully.",
+      updatedCustomer,
+    });
+  } catch (error) {
+    console.error("Error updating customer:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while updating the customer.",
+      error: error.message,
+    });
+  }
+};
+
+
 const getCustomerDetails = async (req, res) => {
   try {
     // Fetch all customer data
@@ -182,6 +226,7 @@ const getOrganizationStatus = async (req, res) => {
 module.exports = {
   getTopCustomer,
   addCustomer,
+  editCustomer,
   getCustomerDetails,
   getCustomerById,
   getOrganizationNames,

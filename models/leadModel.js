@@ -67,7 +67,12 @@ const leadSchema = new mongoose.Schema({
     required: true,
   },
   nextFollowUp: {
-    type: [String],
+    type: [
+      {
+        date: { type: String, required: true }, // Date of the follow-up
+        time: { type: String, required: true }, // Time of the follow-up
+      },
+    ],
     required: true,
   },
   requiredSupport: {
