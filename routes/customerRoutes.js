@@ -7,6 +7,7 @@ const companyMiddleware = require("../middlewares/companyMiddleware");
 router.get('/getTopCustomer',customerController.getTopCustomer);
 router.post('/addCustomer',customerController.addCustomer);
 router.get('/getCustomerDetails',customerController.getCustomerDetails);
+router.get('/getTotalCustomerNo',customerController.getTotalCustomerNo);
 router.get('/getCustomerById/:id',customerController.getCustomerById);
 router.get('/getOrganizationNames',customerController.getOrganizationNames);
 router.get('/getOrganizationTypes',customerController.getOrganizationTypes);

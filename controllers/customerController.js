@@ -82,6 +82,22 @@ const getCustomerDetails = async (req, res) => {
   }
 };
 
+const getTotalCustomerNo = async (req, res) => {
+  try {
+    // Fetch all customer data
+    const getData = await Customer.find();
+
+    // Count total customers in the database
+    const totalCustomers = await Customer.countDocuments();
+
+    // Send response with data and total customer count
+    res.status(200).json({ totalCustomers });
+  } catch (error) {
+    console.error("Error creating tender:", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const getCustomerById = async (req, res) => {
   try {
     // Extract the customer ID from the request parameters
@@ -171,4 +187,5 @@ module.exports = {
   getOrganizationNames,
   getOrganizationTypes,
   getOrganizationStatus,
+  getTotalCustomerNo,
 };
