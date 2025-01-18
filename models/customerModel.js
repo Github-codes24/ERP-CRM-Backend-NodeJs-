@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const workplaceSchema = new mongoose.Schema({
   workplaceName: { type: String, required: true },
   organizationType: { type: String, required: true },
+  organizationStatus: { type: String },
   address: { type: String, required: true },
   region: { type: String, required: true },
   state: { type: String, required: true },
