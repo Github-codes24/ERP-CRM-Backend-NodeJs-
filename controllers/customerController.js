@@ -49,9 +49,14 @@ const addCustomer = async (req, res) => {
     salesPersonName,
   } = req.body;
 
+  // Add organizationName first and then spread addLead properties
+  const updatedAddLead = {
+    organizationName: workplace1.workplaceName,
+    ...addLead,
+  };
   const newCustomer = new Customer({
     workplace1,
-    addLead,
+    addLead: updatedAddLead,
     other,
     quotationInTheNameDesignation,
     salesPersonName,
