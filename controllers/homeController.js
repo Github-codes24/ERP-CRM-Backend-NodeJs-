@@ -118,22 +118,22 @@ const earningByCompany = async (req, res) => {
       {
         companyName: "Unisol",
         productName: "Solar Panel Pro",
-        earning: Math.random() * 5000 + 1000,
+        earning: Math.floor(Math.random() * 5000 + 1000), // Remove decimals
       },
       {
         companyName: "Surgisol",
         productName: "Surgical Kit Advanced",
-        earning: Math.random() * 5000 + 1000,
+        earning: Math.floor(Math.random() * 5000 + 1000), // Remove decimals
       },
       {
         companyName: "Envirosol",
         productName: "Eco Cleaner Max",
-        earning: Math.random() * 5000 + 1000,
+        earning: Math.floor(Math.random() * 5000 + 1000), // Remove decimals
       },
       {
         companyName: "IgniteSphere",
         productName: "HeatWave Generator",
-        earning: Math.random() * 5000 + 1000,
+        earning: Math.floor(Math.random() * 5000 + 1000), // Remove decimals
       },
     ];
 
