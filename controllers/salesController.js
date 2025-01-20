@@ -239,38 +239,44 @@ const getSalesReport = async (req, res) => {
       {
         name: "Pallav",
         totalSales: 5000,
-        salesInPercentage: "25.00",
+        salesInPercentage: "21.65",
         noOfProductsSold: 100,
       },
       {
         name: "Vaibhav",
         totalSales: 3000,
-        salesInPercentage: "15.00",
+        salesInPercentage: "12.99",
         noOfProductsSold: 60,
       },
       {
         name: "Amit",
         totalSales: 2000,
-        salesInPercentage: "10.00",
+        salesInPercentage: "8.66",
         noOfProductsSold: 40,
       },
       {
         name: "Narendra",
         totalSales: 4000,
-        salesInPercentage: "20.00",
+        salesInPercentage: "17.32",
         noOfProductsSold: 80,
       },
       {
         name: "Kishan",
         totalSales: 2500,
-        salesInPercentage: "12.50",
+        salesInPercentage: "10.82",
         noOfProductsSold: 50,
       },
       {
         name: "Company",
         totalSales: 3500,
-        salesInPercentage: "17.50",
+        salesInPercentage: "15.15",
         noOfProductsSold: 70,
+      },
+      {
+        name: "Aishwarya",
+        totalSales: 3100,
+        salesInPercentage: "13.42",
+        noOfProductsSold: 45,
       },
     ];
 
