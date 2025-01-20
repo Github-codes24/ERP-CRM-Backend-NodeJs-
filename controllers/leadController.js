@@ -106,7 +106,7 @@ const getLeads = async (req, res) => {
     const totalCount = await Lead.countDocuments();
 
     // Fetch leads with the specified fields and include the total number of calls
-    const data = await Lead.find()
+    const data = await Lead.find().sort({ createdAt: -1 })
       .select({
         organizationName: 1,
         department: 1,
