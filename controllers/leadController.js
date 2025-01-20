@@ -8,12 +8,10 @@ const addLead = async (req, res) => {
       !Array.isArray(leadData.leadGenratedThrough) ||
       !leadData.leadGenratedThrough.every((item) => typeof item === "string")
     ) {
-      return res
-        .status(400)
-        .json({
-          status: false,
-          message: "pass leadGenratedThrough as an array of strings",
-        });
+      return res.status(400).json({
+        status: false,
+        message: "pass leadGenratedThrough as an array of strings",
+      });
     }
     const lead = new Lead(leadData);
     const datasave = await lead.save();
@@ -28,14 +26,13 @@ const addLead = async (req, res) => {
 const addLeadForEnviroSolution = async (req, res) => {
   try {
     const data = req.body;
+
     const lead = await EnviroLeadModel.create(data);
-    return res
-      .status(201)
-      .json({
-        success: true,
-        message: "lead successfully added for enviro",
-        lead,
-      });
+    return res.status(201).json({
+      success: true,
+      message: "lead successfully added for enviro",
+      lead,
+    });
   } catch (err) {
     return res.status(500).json({ status: false, message: err.message });
   }
@@ -63,8 +60,28 @@ const getLeadForEnviroById = async (req, res) => {
 
 const getLeadsForEnviro = async (req, res) => {
   try {
-    const data = await EnviroLeadModel.find();
-    return res.status(200).json(data);
+    const { page = 1, limit = 10 } = req.query;
+    // Parse page and limit as integers
+    const currentPage = parseInt(page);
+    const itemsPerPage = parseInt(limit);
+
+    const skip = (currentPage - 1) * itemsPerPage;
+
+    const totalCount = await EnviroLeadModel.countDocuments();
+    const data = await EnviroLeadModel.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(itemsPerPage);
+    return res.status(200).json({
+      data,
+      pagination: {
+        currentPage,
+        totalPages,
+        hasNextPage: currentPage < totalPages,
+        hasPrevPage: currentPage > 1,
+        totalCount,
+      },
+    });
   } catch (err) {
     return res.status(500).json({ status: false, message: err.message });
   }
@@ -81,13 +98,11 @@ const editLeadForEnviroById = async (req, res) => {
     if (!updateLead) {
       return res.status(404).json({ message: "Lead not found" });
     }
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: "lead updated successfully",
-        updatedLead: updateLead,
-      });
+    return res.status(200).json({
+      status: true,
+      message: "lead updated successfully",
+      updatedLead: updateLead,
+    });
   } catch (err) {
     return res.status(500).json({ status: false, message: err.message });
   }
@@ -106,7 +121,8 @@ const getLeads = async (req, res) => {
     const totalCount = await Lead.countDocuments();
 
     // Fetch leads with the specified fields and include the total number of calls
-    const data = await Lead.find().sort({ createdAt: -1 })
+    const data = await Lead.find()
+      .sort({ createdAt: -1 })
       .select({
         organizationName: 1,
         department: 1,
