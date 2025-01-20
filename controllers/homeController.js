@@ -327,12 +327,12 @@ const getSalesReportForHome = async (req, res) => {
 
 const getTopCustomerForHome = async (req, res) => {
   try {
-    // Dummy data for the companies and their respective single workplace
-    const companyWorkplaces = {
-      Unisol: "Workplace A",
-      Surgisol: "Workplace X",
-      Envirosol: "Workplace 1",
-      IgniteSphere: "Workplace Alpha"
+    // Dummy data for the companies, their workplaces, and their images
+    const companyDetails = {
+      Unisol: { workplace: "Workplace A", image: "https://example.com/unisol.jpg" },
+      Surgisol: { workplace: "Workplace X", image: "https://example.com/surgisol.jpg" },
+      Envirosol: { workplace: "Workplace 1", image: "https://example.com/envirosol.jpg" },
+      IgniteSphere: { workplace: "Workplace Alpha", image: "https://example.com/ignitesphere.jpg" }
     };
 
     // Function to convert milliseconds to a duration breakdown
@@ -342,17 +342,11 @@ const getTopCustomerForHome = async (req, res) => {
 
       // Calculate breakdown
       const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-
       return `${days} days`; // Simplified to just days
     };
 
-    // Generate dummy data for each company and their single workplace
-    const result = Object.entries(companyWorkplaces).map(([company, workplace]) => {
+    // Generate dummy data for each company
+    const result = Object.entries(companyDetails).map(([company, details]) => {
       // Generating random createdAt dates for each workplace (within the last year)
       const randomDate = new Date(
         Date.now() - Math.floor(Math.random() * 365 * 24 * 60 * 60 * 1000) // Random date within the last year
@@ -360,8 +354,9 @@ const getTopCustomerForHome = async (req, res) => {
 
       return {
         companyName: company,
-        workplaceName: workplace,
+        workplaceName: details.workplace,
         duration: getDuration(randomDate), // Get the duration based on createdAt
+        image: details.image // Add the company's image
       };
     });
 
@@ -374,6 +369,7 @@ const getTopCustomerForHome = async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 };
+
 
 const totalSalesOfAllCompanies = async (req, res) => {
   try {
