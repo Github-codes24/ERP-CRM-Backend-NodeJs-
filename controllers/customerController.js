@@ -113,7 +113,7 @@ const editCustomerById = async (req, res) => {
 const getCustomerDetails = async (req, res) => {
   try {
     // Fetch all customer data
-    const getData = await Customer.find();
+    const getData = await Customer.find().sort({ createdAt: -1 });
 
     // Count total customers in the database
     const totalCustomers = await Customer.countDocuments();
