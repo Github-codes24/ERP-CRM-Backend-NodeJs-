@@ -329,10 +329,10 @@ const getTopCustomerForHome = async (req, res) => {
   try {
     // Dummy data for the companies, their workplaces, and their images
     const companyDetails = {
-      Unisol: { workplace: "Workplace A", image: "https://example.com/unisol.jpg" },
-      Surgisol: { workplace: "Workplace X", image: "https://example.com/surgisol.jpg" },
-      Envirosol: { workplace: "Workplace 1", image: "https://example.com/envirosol.jpg" },
-      IgniteSphere: { workplace: "Workplace Alpha", image: "https://example.com/ignitesphere.jpg" }
+      Unisol: { workplace: "Workplace A", image: "https://res.cloudinary.com/dyiz5cqbl/image/upload/v1737379512/Audit_Project/djhd8wcozmsntvvymqsy.svg" },
+      Surgisol: { workplace: "Workplace X", image: "https://res.cloudinary.com/dyiz5cqbl/image/upload/v1737379512/Audit_Project/djhd8wcozmsntvvymqsy.svg" },
+      Envirosol: { workplace: "Workplace 1", image: "https://res.cloudinary.com/dyiz5cqbl/image/upload/v1737379512/Audit_Project/djhd8wcozmsntvvymqsy.svg" },
+      IgniteSphere: { workplace: "Workplace Alpha", image: "https://res.cloudinary.com/dyiz5cqbl/image/upload/v1737379512/Audit_Project/djhd8wcozmsntvvymqsy.svg" }
     };
 
     // Function to convert milliseconds to a duration breakdown
