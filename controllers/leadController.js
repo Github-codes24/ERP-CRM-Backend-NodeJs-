@@ -72,6 +72,9 @@ const getLeadsForEnviro = async (req, res) => {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(itemsPerPage);
+
+    const totalPages = Math.ceil(totalCount / itemsPerPage);
+
     return res.status(200).json({
       data,
       pagination: {
