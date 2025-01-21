@@ -114,17 +114,35 @@ const editCustomerById = async (req, res) => {
   }
 };
 
-
 const getCustomerDetails = async (req, res) => {
   try {
+    const { page = 1, limit = 10 } = req.query;
+    // Parse page and limit as integers
+    const currentPage = parseInt(page);
+    const itemsPerPage = parseInt(limit);
+
+    const skip = (currentPage - 1) * itemsPerPage;
+
+    const totalCount = await Customer.countDocuments();
     // Fetch all customer data
-    const getData = await Customer.find().sort({ createdAt: -1 });
+    const getData = await Customer.find().sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(itemsPerPage);
 
     // Count total customers in the database
     const totalCustomers = await Customer.countDocuments();
 
+    const totalPages = Math.ceil(totalCount / itemsPerPage);
+
     // Send response with data and total customer count
-    res.status(200).json({ totalCustomers, customers: getData });
+    return res.status(200).json({ totalCustomers, customers: getData,
+      pagination: {
+        currentPage,
+        totalPages,
+        hasNextPage: currentPage < totalPages,
+        hasPrevPage: currentPage > 1,
+        totalCount,
+    }, });
   } catch (error) {
     console.error("Error creating tender:", error);
     return res.status(500).json({ message: error.message });
