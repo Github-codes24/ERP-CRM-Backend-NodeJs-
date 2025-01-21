@@ -146,6 +146,30 @@ const getTotalCustomerNo = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+const getTotalActiveCustomerNo = async (req, res) => {
+  try {
+    // Count total customers in the database
+    const totalActiveCustomers = await Customer.countDocuments();
+
+    // Send response with data and total customer count
+    return res.status(200).json({ totalCustomers: totalActiveCustomers - 1 });
+  } catch (error) {
+    console.error("Error creating tender:", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const getTotalInactiveCustomerNo = async (req, res) => {
+  try {
+    // const totalActiveCustomers = await Customer.countDocuments();
+
+    // Send response with data and total customer count
+    return res.status(200).json({ totalInactiveCustomers: 1 });
+  } catch (error) {
+    console.error("Error creating tender:", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 const getCustomerById = async (req, res) => {
   try {
@@ -238,4 +262,6 @@ module.exports = {
   getOrganizationTypes,
   getOrganizationStatus,
   getTotalCustomerNo,
+  getTotalActiveCustomerNo,
+  getTotalInactiveCustomerNo
 };
