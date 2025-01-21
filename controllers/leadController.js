@@ -223,6 +223,11 @@ const editLeadById = async (req, res) => {
 
     // Fields for direct updates
     const updateFields = {
+      nextCallObjective,
+      discussionPoint,
+      nextFollowUp,
+      comments,
+      status,
       organizationName,
       address,
       area,
@@ -245,35 +250,35 @@ const editLeadById = async (req, res) => {
     });
 
     // Handle array updates conditionally
-    const updateOperations = {
-      $push: {},
-    };
+    // const updateOperations = {
+    //   $push: {},
+    // };
 
-    if (nextCallObjective) {
-      updateOperations.$push.nextCallObjective = nextCallObjective;
-    }
-    if (discussionPoint) {
-      updateOperations.$push.discussionPoint = discussionPoint;
-    }
-    if (nextFollowUp) {
-      updateOperations.$push.nextFollowUp = nextFollowUp;
-    }
-    if (comments) {
-      updateOperations.$push.comments = comments;
-    }
-    if (status) {
-      updateOperations.$push.status = status;
-    }
+    // if (nextCallObjective) {
+    //   updateOperations.$push.nextCallObjective = nextCallObjective;
+    // }
+    // if (discussionPoint) {
+    //   updateOperations.$push.discussionPoint = discussionPoint;
+    // }
+    // if (nextFollowUp) {
+    //   updateOperations.$push.nextFollowUp = nextFollowUp;
+    // }
+    // if (comments) {
+    //   updateOperations.$push.comments = comments;
+    // }
+    // if (status) {
+    //   updateOperations.$push.status = status;
+    // }
 
-    // If no $push fields are present, remove the $push key
-    if (Object.keys(updateOperations.$push).length === 0) {
-      delete updateOperations.$push;
-    }
+    // // If no $push fields are present, remove the $push key
+    // if (Object.keys(updateOperations.$push).length === 0) {
+    //   delete updateOperations.$push;
+    // }
 
     // Merge updateOperations with updateFields for the final update object
-    const finalUpdate = { ...updateOperations, ...updateFields };
+    // const finalUpdate = { ...updateFields };
 
-    const data = await Lead.findByIdAndUpdate(id, finalUpdate, {
+    const data = await Lead.findByIdAndUpdate(id, updateFields, {
       new: true, // Return the updated document
     });
 
