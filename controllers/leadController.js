@@ -186,10 +186,18 @@ const getLeadById = async (req, res) => {
       return res.status(404).json({ message: "Lead not found." });
     }
 
+    // Calculate total calls
+    const totalCalls =
+      (Array.isArray(result.nextFollowUp) ? result.nextFollowUp.length : 0) + 1;
+
     // Respond with the fetched lead
-    return res
-      .status(200)
-      .json({ message: "Lead retrieved successfully.", data: result });
+    return res.status(200).json({
+      message: "Lead retrieved successfully.",
+      data: {
+        ...result.toObject(), // Convert Mongoose document to plain object
+        totalCalls,
+      },
+    });
   } catch (error) {
     console.error("Error fetching lead by ID:", error);
     return res
