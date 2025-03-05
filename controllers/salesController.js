@@ -237,34 +237,45 @@ const getSalesReport = async (req, res) => {
     // Define the dummy data
     const dummyData = [
       {
-        name: "Pallav",
+        name: "Pallav Kr Gopal",
+        designation:"Business Head",
         totalSales: 5000,
         salesInPercentage: "21.65",
         noOfProductsSold: 100,
       },
       {
-        name: "Vaibhav",
+        name: "Vaibhav Shukla",
+        designation:"Sales Manager (Mumbai)",
         totalSales: 3000,
         salesInPercentage: "12.99",
         noOfProductsSold: 60,
       },
       {
-        name: "Amit",
+        name: "Amit Patil",
+        designation:"Sales Manager (Nagpur)",
         totalSales: 2000,
         salesInPercentage: "8.66",
         noOfProductsSold: 40,
       },
+      // {
+      //   name: "Narendra",
+      //   totalSales: 4000,
+      //   salesInPercentage: "17.32",
+      //   noOfProductsSold: 80,
+      // },
       {
-        name: "Narendra",
-        totalSales: 4000,
-        salesInPercentage: "17.32",
-        noOfProductsSold: 80,
-      },
-      {
-        name: "Kishan",
+        name: "Kishan Mathankar",
+        designation:"Sales Manager (Yavatmal)",
         totalSales: 2500,
         salesInPercentage: "10.82",
         noOfProductsSold: 50,
+      },
+      {
+        name: "Mayur Dhandale",
+        designation:"Sales and Admin (Nagpur)",
+        totalSales: 3500,
+        salesInPercentage: "15.15",
+        noOfProductsSold: 70,
       },
       {
         name: "Company",
@@ -272,12 +283,13 @@ const getSalesReport = async (req, res) => {
         salesInPercentage: "15.15",
         noOfProductsSold: 70,
       },
-      {
-        name: "Aishwarya",
-        totalSales: 3100,
-        salesInPercentage: "13.42",
-        noOfProductsSold: 45,
-      },
+    
+      // {
+      //   name: "Aishwarya",
+      //   totalSales: 3100,
+      //   salesInPercentage: "13.42",
+      //   noOfProductsSold: 45,
+      // },
     ];
 
     // Send the dummy data in the response
