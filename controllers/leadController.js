@@ -177,7 +177,7 @@ const getLeads = async (req, res) => {
 const getLeadById = async (req, res) => {
   try {
     const { id } = req.params;
-
+    
     // Fetch the lead by ID
     const result = await Lead.findById(id);
 
