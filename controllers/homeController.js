@@ -1,6 +1,5 @@
 const getFinancialdataForHome = async (req, res) => {
   try {
-    const { filterBy } = req.query; // 'monthly', 'quarterly', or 'yearly'
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
 
@@ -8,53 +7,31 @@ const getFinancialdataForHome = async (req, res) => {
     const startYear = currentMonth >= 4 ? currentYear : currentYear - 1;
     const endYear = startYear + 1;
 
-    // Define months and quarters
     const financialYearMonths = [
-      "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-      "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+      "Jan",
+      "Feb",
+      "Mar",
     ];
-    const quarters = [
-      "Apr-Jun",
-      "Jul-Sep",
-      "Oct-Dec",
-      "Jan-Mar",
-    ];;
 
     // Dummy data for four companies
     const companies = ["Unisol", "Surgisol", "Envirosol", "IgniteSphere"];
-    const dummyData = companies.map((company) => {
-      // Generate monthly data
-      const monthlyData = Array.from({ length: 12 }, (_, i) => ({
+    const dummyData = companies.map((company) => ({
+      companyName: company,
+      financialYear: `${startYear}-${endYear}`,
+      monthlyData: Array.from({ length: 12 }, (_, i) => ({
         month: financialYearMonths[i],
         totalBillAmount: Math.floor(Math.random() * 10000 + 5000), // Random value between 5000 and 15000
-      }));
-
-      // Aggregate data based on the requested filter level
-      let aggregatedData;
-      switch (filterBy) {
-        case 'quarterly':
-          aggregatedData = quarters.map((quarter, index) => {
-            const quarterMonths = monthlyData.slice(index * 3, index * 3 + 3);
-            const totalBillAmount = quarterMonths.reduce((sum, data) => sum + data.totalBillAmount, 0);
-            return { quarter, totalBillAmount };
-          });
-          break;
-        case 'yearly':
-          const totalBillAmount = monthlyData.reduce((sum, data) => sum + data.totalBillAmount, 0);
-          aggregatedData = [{ year: `${startYear}-${endYear}`, totalBillAmount }];
-          break;
-        case 'monthly':
-        default:
-          aggregatedData = monthlyData;
-          break;
-      }
-
-      return {
-        companyName: company,
-        financialYear: `${startYear}-${endYear}`,
-        data: aggregatedData,
-      };
-    });
+      })),
+    }));
 
     // Send dummy data as response
     res.status(200).json({ data: dummyData });
@@ -62,63 +39,36 @@ const getFinancialdataForHome = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 const getCalendarYearDataForHome = async (req, res) => {
   try {
-    const { filterBy } = req.query; // 'monthly', 'quarterly', or 'yearly'
     const currentYear = new Date().getFullYear();
 
-    // Define months and quarters
     const calendarYearMonths = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-    const quarters = [
-      "Jan-Mar",
-      "Apr-Jun",
-      "Jul-Sept",
-      "Oct-Dec",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
 
     // Dummy data for four companies
     const companies = ["Unisol", "Surgisol", "Envirosol", "IgniteSphere"];
-    const dummyData = companies.map((company) => {
-      // Generate monthly data
-      const monthlyData = Array.from({ length: 12 }, (_, i) => ({
+    const dummyData = companies.map((company) => ({
+      companyName: company,
+      calendarYear: `${currentYear}`,
+      monthlyData: Array.from({ length: 12 }, (_, i) => ({
         month: calendarYearMonths[i],
         totalBillAmount: Math.floor(Math.random() * 10000 + 5000), // Random value between 5000 and 15000
-      }));
-
-      // Aggregate data based on the requested filter level
-      let aggregatedData;
-      switch (filterBy) {
-        case 'quarterly':
-          aggregatedData = quarters.map((quarter, index) => {
-            const quarterMonths = monthlyData.slice(index * 3, index * 3 + 3);
-            const totalBillAmount = quarterMonths.reduce((sum, data) => sum + data.totalBillAmount, 0);
-            return { period: quarter, totalBillAmount };
-          });
-          break;
-        case 'yearly':
-          const totalBillAmount = monthlyData.reduce((sum, data) => sum + data.totalBillAmount, 0);
-          aggregatedData = [{ period: `${currentYear}`, totalBillAmount }];
-          break;
-        case 'monthly':
-        default:
-          aggregatedData = monthlyData.map(data => ({
-            period: data.month,
-            totalBillAmount: data.totalBillAmount
-          }));
-          break;
-      }
-
-      return {
-        companyName: company,
-        calendarYear: `${currentYear}`,
-        data: aggregatedData,
-      };
-    });
+      })),
+    }));
 
     // Send dummy data as response
     res.status(200).json({ data: dummyData });
@@ -126,7 +76,6 @@ const getCalendarYearDataForHome = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 const getTopProductsForHome = async (req, res) => {
   try {
