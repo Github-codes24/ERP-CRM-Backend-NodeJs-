@@ -14,10 +14,10 @@ const getFinancialdataForHome = async (req, res) => {
       "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"
     ];
     const quarters = [
-      "April-June",
-      "July-September",
-      "October-December",
-      "January-March",
+      "Apr-Jun",
+      "Jul-Sep",
+      "Oct-Dec",
+      "Jan-Mar",
     ];;
 
     // Dummy data for four companies
