@@ -9,6 +9,9 @@ const leadSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  designation: {
+    type: String,
+  },
   customerName: {
     type: String,
     required: true,
@@ -47,6 +50,28 @@ const leadSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  anniversary: {
+    type: String,
+  },
+  officialMail: {
+    type: String,
+  },
+  personalMail: {
+    type: String,
+  },
+  contactNumber: {
+    type: String,
+  },
+  alternateContactNumber: {
+    type: String,
+  },
+  meetingDate: {
+    type: String,
+  },
+  nextMeetingDate: {
+    type: String,
+  },
+
   callObjective: {
     type: String,
     required: true,

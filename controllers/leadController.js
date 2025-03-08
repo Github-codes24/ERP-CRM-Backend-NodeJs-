@@ -177,7 +177,7 @@ const getLeads = async (req, res) => {
 const getLeadById = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     // Fetch the lead by ID
     const result = await Lead.findById(id);
 
@@ -221,6 +221,17 @@ const editLeadById = async (req, res) => {
       city,
       state,
       department,
+      designation,
+      haveYouMeetBefore,
+      dob,
+      productPromoted,
+      anniversary,
+      officialMail,
+      personalMail,
+      contactNumber,
+      alternateContactNumber,
+      meetingDate,
+      nextMeetingDate,
       pincode,
       callObjective,
       targetDepartment,
@@ -244,6 +255,17 @@ const editLeadById = async (req, res) => {
       city,
       state,
       department,
+      designation,
+      haveYouMeetBefore,
+      dob,
+      productPromoted,
+      anniversary,
+      officialMail,
+      personalMail,
+      contactNumber,
+      alternateContactNumber,
+      meetingDate,
+      nextMeetingDate,
       pincode,
       callObjective,
       targetDepartment,
